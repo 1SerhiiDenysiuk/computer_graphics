@@ -10,8 +10,8 @@ public class ShootScript : MonoBehaviour
 
     void Update(){
         if (Input.GetButtonDown("Jump"))
-            { 
-                Transform.Instantiate(bullet, bulletSpawnPoint.transform.position, transform.rotation);
-            }
+        { 
+            Instantiate(bullet, bulletSpawnPoint.transform.position, transform.rotation);
+        }
     }
 }

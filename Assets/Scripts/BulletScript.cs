@@ -1,20 +1,24 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Experimental.UIElements;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BulletScript : MonoBehaviour
 {
+    private Rigidbody _rigidbody;
+    public float bulletSpeed = 2;
     public GameObject bullet;
 
     void Start()
     {
-        
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
-    void Update() 
+    void FixedUpdate()
     {
-        transform.Translate(20 * Time.deltaTime * Vector3.right);
+        _rigidbody.velocity = bulletSpeed * transform.right;
     }
 
-    private void OnCollisionEnter(Collision collision) 
+    private void OnCollisionEnter(Collision collision)
     {
         Destroy(bullet);
     }

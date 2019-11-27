@@ -1,27 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TankMotion : MonoBehaviour
 {
-    Rigidbody _rb;
-    public float MoveSpeed = 10.0f;
-    public float RotationSpeed = 800f;
+    private Rigidbody _rigidbody;
+    public float moveSpeed = 10.0f;
+    public float rotationSpeed = 800f;
     void Start () {
-        _rb = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
     void Update () {
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            _rb.velocity = transform.right * MoveSpeed;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            _rb.velocity = transform.right * -MoveSpeed;
-        }
-        if(Input.GetKey(KeyCode.LeftArrow))
-            transform.Rotate(Time.deltaTime * RotationSpeed * Vector3.down);
-        if(Input.GetKey(KeyCode.RightArrow))
-            transform.Rotate(Time.deltaTime * RotationSpeed * Vector3.up); 
+        Move(KeyCode.UpArrow, 1);
+        Move(KeyCode.DownArrow, -1);
+        Rotate(KeyCode.RightArrow, -1);
+        Rotate(KeyCode.LeftArrow, 1);
+    }
+
+    private void Rotate(KeyCode key, int rotateDirection)
+    {
+        if (Input.GetKey(key))
+            transform.Rotate(Time.deltaTime * rotationSpeed * rotateDirection * Vector3.down);
+    }
+
+    private void Move(KeyCode key, int direction)
+    {    
+        if (Input.GetKey(key))
+            _rigidbody.velocity = direction * moveSpeed *transform.right;
     }
 }
